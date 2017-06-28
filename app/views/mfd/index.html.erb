@@ -1,0 +1,21 @@
+<h1>NTc</h1>
+<% @links.each do |key, value| %>
+    <% news_link = Nokogiri::HTML(open(key)) %>
+    <% date = news_link.css('.mfd-content-container').css('.mfd-content-datetime').css('.mfd-content-time').text %>
+    <% if date == ("сегодня") %>
+      <% date = @current_date %>
+    <% elsif date == ("вчера") %>
+      <% date = Date.today.prev_day.strftime('%d.%m.%Y').to_s %>
+    <% end %>
+    
+    <% head = value %>
+    
+    <% body = news_link.css('.mfd-content-container').css('div.m-content:nth-child(4)').text %>
+    <% body = body.gsub(/[А-Я]+\,\s\d+\s\W+\.\s/, "").gsub(/\S+,\s\d+\S+.+\s\/\S+\,\s\S+.\//, "") %>
+    <% body = body.gsub(/\s\s+/, "\r").gsub(@del_var, "\r\n\r\n") %>
+<p><%= date %></p>
+<p><%= head %></p>
+<p><%= body %></p>
+<p>.</p>
+<p>.</p>
+<% end %>

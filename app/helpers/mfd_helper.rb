@@ -1,0 +1,2 @@
+module MfdHelper
+end

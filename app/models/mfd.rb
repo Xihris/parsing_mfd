@@ -1,0 +1,2 @@
+class Mfd < ApplicationRecord
+end
